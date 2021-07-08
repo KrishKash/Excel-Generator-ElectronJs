@@ -1,7 +1,7 @@
-# ElcetronJs-Excel-Generator
+# Excel-Generator-ElectronJs
 
 ## Click to clone this repository
-[ElcetronJs-Excel-Generator](https://github.com/krishna-kashyap-dev/ElcetronJs-Excel-Generator)
+[Excel-Generator-ElectronJs](https://github.com/krishna-kashyap-dev/ElcetronJs-Excel-Generator)
 
 ## Steps to run the project
 Go inside folder Excel-Generator-ElectronJs where package.json resides

@@ -10,23 +10,24 @@
 </head>
 
 <body>
-  <form id=mainfrm>
+  <form id="mainfrm">
     <h3>Iot-Device-Connector Spreadsheet Generator</h3>
+
+    <!-- Spreadsheet Name -->
     <label for="ssname">Spreadsheet Name:</label>
     <input type="text" id="ssname" name="ssname" /><br /><br />
-    
+
     <!-- Available Sheets -->
     <label for="sname">Sheet Names:</label>
-    <!-- <select id="sname" name="sname" onChange="populateColumns(this.value);"> -->
-      <select id="sname" name="sname" onChange="generateSheetForm(this.value);">
+    <select id="sname" name="sname" onChange="generateSheetForm(this.value);">
       <option value="devicetype" selected>DeviceType</option>
       <!-- <option value="devicetype" >DeviceType</option> -->
       <option value="deviceinterface">DeviceInterface</option>
       <option value="telemetrypoint">TelemetryPoint</option>
-      <option value="devicecategory">DeviceCategory</option>
-      </select><br /><br />
+      <option value="locators">Locators</option>
+      <option value="deviceCategory">DeviceCategory</option>
+    </select><br /><br />
   </form>
-  
 
   <form id="devicetypefrm" style="display: none">
     <h3>Form to enter DeviceType data</h3>
@@ -38,7 +39,6 @@
     <input type="text" id="modelnumber" name="modelnumber" /><br /><br />
     <label for="devicekind">DeviceKind:</label>
     <input type="text" id="devicekind" name="devicekind" /><br /><br />
-
   </form>
 
   <form id="deviceinterfacefrm" style="display: none">
@@ -53,7 +53,6 @@
     <input type="text" id="iotid" name="iotid" /><br /><br />
     <label for="categoryname">CategoryName:</label>
     <input type="text" id="categoryname" name="categoryname" /><br /><br />
-
   </form>
 
   <form id="telemetrypointfrm" style="display: none">
@@ -68,47 +67,86 @@
     <input type="text" id="observedelement" name="observedelement" /><br /><br />
     <label for="iotid">IoTId:</label>
     <input type="text" id="iotid" name="iotid" /><br /><br />
+  </form>
 
+  <form id="locatorsfrm" style="display: none">
+    <h3>Form to enter Locators data</h3>
+    <label for="locatorname">LocatorName:</label>
+    <input type="text" id="locatorname" name="locatorname" /><br /><br />
+    <label for="classname">ClassName:</label>
+    <input type="text" id="classname" name="classname" /><br /><br />
+    <label for="propertyname">PropertyName:</label>
+    <input type="text" id="propertyname" name="propertyname" /><br /><br />
+  </form>
+
+  <form id="devicecategoryfrm" style="display: none">
+    <h3>Form to enter DeviceCategory data</h3>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" /><br /><br />
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" /><br /><br />
   </form>
 
   <script>
     function generateSheetForm(value) {
-      // alert("Inside generateSheetForm-> "+ value);
-      switch(value){
+      switch (value) {
         case "devicetype":
-          document.getElementById("mainfrm").style.display="none";
-          document.getElementById("devicetypefrm").style.display="block";
-          document.getElementById("deviceinterfacefrm").style.display="none";
-          document.getElementById("telemetrypointfrm").style.display="none";
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "block";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("locatorsfrm").style.display = "none";
+          document.getElementById("devicecategoryfrm").style.display = "none";
           break;
+
         case "deviceinterface":
-          document.getElementById("mainfrm").style.display="none";
-          document.getElementById("devicetypefrm").style.display="none";
-          document.getElementById("deviceinterfacefrm").style.display="block";
-          document.getElementById("telemetrypointfrm").style.display="none";
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "block";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("locatorsfrm").style.display = "none";
+          document.getElementById("devicecategoryfrm").style.display = "none";
           break;
+
         case "telemetrypoint":
-          document.getElementById("mainfrm").style.display="none";
-          document.getElementById("devicetypefrm").style.display="none";
-          document.getElementById("deviceinterfacefrm").style.display="none";
-          document.getElementById("telemetrypointfrm").style.display="block";
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "block";
+          document.getElementById("locatorsfrm").style.display = "none";
+          document.getElementById("devicecategoryfrm").style.display = "none";
           break;
+
+        case "locators":
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("locatorsfrm").style.display = "block";
+          document.getElementById("devicecategoryfrm").style.display = "none";
+          break;
+
         case "devicecategory":
-          document.getElementById("mainfrm").style.display="block";
-          document.getElementById("devicetypefrm").style.display="none";
-          document.getElementById("deviceinterfacefrm").style.display="none";
-          document.getElementById("telemetrypointfrm").style.display="none";
-          break; 
-        default: 
-        alert("default"+ value);
-          document.getElementById("mainfrm").style.display="block";
-          document.getElementById("devicetypefrm").style.display="none";
-          document.getElementById("deviceinterfacefrm").style.display="none";
-          document.getElementById("telemetrypointfrm").style.display="none";  
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("locatorsfrm").style.display = "none";
+          document.getElementById("devicecategoryfrm").style.display = "block";
+          break;
+
+        default:
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("locatorsfrm").style.display = "none";
+          document.getElementById("devicecategoryfrm").style.display = "none";
       }
     }
   </script>
 
-<button onclick="createExcel()">Create Spreadsheet</button>
+  <button onclick="createExcel()">Create Spreadsheet</button>
 </body>
+
 </html>

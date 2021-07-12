@@ -46,7 +46,7 @@ function createExcel() {
           cell.fill = {
             type: "pattern",
             pattern: "solid",
-            fgColor: { argb: "1E90FF" },
+            fgColor: { argb: "5E8CFB" },
           };
         }
       });
@@ -143,6 +143,39 @@ function createExcel() {
       });
     });
     console.log(TelemetryPointSheet);
+  }
+
+  {
+    // Create LocatorsSheet
+    var LocatorsSheet = workbook.addWorksheet("Locators");
+
+    // table header
+    LocatorsSheet.columns = [
+      { header: "LocatorName", key: "locatorname", width: 20 },
+      { header: "ClassName", key: "classname", width: 40 },
+      { header: "PropertyName", key: "propertyname", width: 20 },
+    ];
+
+    // Add rows in the above header
+    LocatorsSheet.addRow({
+      locatorname: "ById",
+      classname: "bis.spatialelement",
+      propertyname: "ECInstanceId",
+    });
+
+    //background color for column header
+    LocatorsSheet.eachRow(function (row, rowNumber) {
+      row.eachCell((cell) => {
+        if (rowNumber == 1) {
+          cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "5E8CFB" },
+          };
+        }
+      });
+    });
+    console.log(LocatorsSheet);
   }
 
   // Save Excel on Hard Disk

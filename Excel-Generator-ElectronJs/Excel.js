@@ -64,7 +64,7 @@ function createExcel() {
       { header: "DeviceName", key: "devicename", width: 30 },
       { header: "DeviceTypeName", key: "devicetypename", width: 30 },
       { header: "LocationPoint", key: "locationpoint", width: 30 },
-      { header: "IoTId", key: "iotid" },
+      { header: "IoTId", key: "iotid", width: 20 },
       { header: "CategoryName", key: "categoryname", width: 20 },
     ];
 
@@ -109,7 +109,7 @@ function createExcel() {
       { header: "ObservationName", key: "observationname", width: 30 },
       { header: "Phenomenon", key: "phenomenon", width: 30 },
       { header: "DeviceName", key: "devicename", width: 30 },
-      { header: "ObservedElement", key: "observedelement" },
+      { header: "ObservedElement", key: "observedelement", width: 40 },
       { header: "IoTId", key: "iotid", width: 20 },
     ];
 

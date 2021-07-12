@@ -1,23 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="script-src 'self' 'unsafe-inline';"
-    />
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello to Electron World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    <br>Chromium <span id="chrome-version"></span>,
-    <br>and Electron <span id="electron-version"></span>.
-    <br><br>
 
-    <button onclick="createExcel()">Create Spreadsheet</button>
+<head>
+  <meta charset="UTF-8" />
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <script src="./Excel.js"></script>
+  <title>Iot-Device-Connector!</title>
+</head>
 
-    <script src="./Excel.js"></script>
-  </body>
+<body>
+  <form id=mainfrm>
+    <h3>Iot-Device-Connector Spreadsheet Generator</h3>
+    <label for="ssname">Spreadsheet Name:</label>
+    <input type="text" id="ssname" name="ssname" /><br /><br />
+    
+    <!-- Available Sheets -->
+    <label for="sname">Sheet Names:</label>
+    <!-- <select id="sname" name="sname" onChange="populateColumns(this.value);"> -->
+      <select id="sname" name="sname" onChange="generateSheetForm(this.value);">
+      <option value="devicetype" selected>DeviceType</option>
+      <!-- <option value="devicetype" >DeviceType</option> -->
+      <option value="deviceinterface">DeviceInterface</option>
+      <option value="telemetrypoint">TelemetryPoint</option>
+      <option value="devicecategory">DeviceCategory</option>
+      </select><br /><br />
+  </form>
+  
+
+  <form id="devicetypefrm" style="display: none">
+    <h3>Form to enter DeviceType data</h3>
+    <label for="devicetypename">DeviceTypeName:</label>
+    <input type="text" id="devicetypename" name="devicetypename" /><br /><br />
+    <label for="manufacturer">Manufacturer:</label>
+    <input type="text" id="manufacturer" name="manufacturer" /><br /><br />
+    <label for="modelnumber">ModelNumber:</label>
+    <input type="text" id="modelnumber" name="modelnumber" /><br /><br />
+    <label for="devicekind">DeviceKind:</label>
+    <input type="text" id="devicekind" name="devicekind" /><br /><br />
+
+  </form>
+
+  <form id="deviceinterfacefrm" style="display: none">
+    <h3>Form to enter DeviceInterface data</h3>
+    <label for="devicename">DeviceName:</label>
+    <input type="text" id="devicename" name="devicename" /><br /><br />
+    <label for="devicetypename">DeviceTypeName:</label>
+    <input type="text" id="devicetypename" name="devicetypename" /><br /><br />
+    <label for="locationpoint">LocationPoint:</label>
+    <input type="text" id="locationpoint" name="locationpoint" /><br /><br />
+    <label for="iotid">IoTId:</label>
+    <input type="text" id="iotid" name="iotid" /><br /><br />
+    <label for="categoryname">CategoryName:</label>
+    <input type="text" id="categoryname" name="categoryname" /><br /><br />
+
+  </form>
+
+  <form id="telemetrypointfrm" style="display: none">
+    <h3>Form to enter TelemetryPoint data</h3>
+    <label for="observationname">ObservationName:</label>
+    <input type="text" id="observationname" name="observationname" /><br /><br />
+    <label for="phenomenon">Phenomenon:</label>
+    <input type="text" id="phenomenon" name="phenomenon" /><br /><br />
+    <label for="devicename">DeviceName:</label>
+    <input type="text" id="devicename" name="devicename" /><br /><br />
+    <label for="observedelement">ObservedElement:</label>
+    <input type="text" id="observedelement" name="observedelement" /><br /><br />
+    <label for="iotid">IoTId:</label>
+    <input type="text" id="iotid" name="iotid" /><br /><br />
+
+  </form>
+
+  <script>
+    function generateSheetForm(value) {
+      // alert("Inside generateSheetForm-> "+ value);
+      switch(value){
+        case "devicetype":
+          document.getElementById("mainfrm").style.display="none";
+          document.getElementById("devicetypefrm").style.display="block";
+          document.getElementById("deviceinterfacefrm").style.display="none";
+          document.getElementById("telemetrypointfrm").style.display="none";
+          break;
+        case "deviceinterface":
+          document.getElementById("mainfrm").style.display="none";
+          document.getElementById("devicetypefrm").style.display="none";
+          document.getElementById("deviceinterfacefrm").style.display="block";
+          document.getElementById("telemetrypointfrm").style.display="none";
+          break;
+        case "telemetrypoint":
+          document.getElementById("mainfrm").style.display="none";
+          document.getElementById("devicetypefrm").style.display="none";
+          document.getElementById("deviceinterfacefrm").style.display="none";
+          document.getElementById("telemetrypointfrm").style.display="block";
+          break;
+        case "devicecategory":
+          document.getElementById("mainfrm").style.display="block";
+          document.getElementById("devicetypefrm").style.display="none";
+          document.getElementById("deviceinterfacefrm").style.display="none";
+          document.getElementById("telemetrypointfrm").style.display="none";
+          break; 
+        default: 
+        alert("default"+ value);
+          document.getElementById("mainfrm").style.display="block";
+          document.getElementById("devicetypefrm").style.display="none";
+          document.getElementById("deviceinterfacefrm").style.display="none";
+          document.getElementById("telemetrypointfrm").style.display="none";  
+      }
+    }
+  </script>
+
+<button onclick="createExcel()">Create Spreadsheet</button>
+</body>
 </html>

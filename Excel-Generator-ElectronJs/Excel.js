@@ -179,7 +179,10 @@ function createExcel() {
   }
 
   // Save Excel on Hard Disk
-  workbook.xlsx.writeFile("Spreadsheet.xlsx").then(function () {
+  let fileName = document.getElementById("ssname").value;
+  // alert("filename-<"+ fileName);
+  fileName=fileName+".xlsx";
+  workbook.xlsx.writeFile(fileName).then(function () {
     // Success Message
     alert("File Saved");
   });

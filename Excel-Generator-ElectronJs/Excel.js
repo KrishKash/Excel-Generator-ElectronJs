@@ -100,6 +100,51 @@ function createExcel() {
     console.log(DeviceInterfaceSheet);
   }
 
+  {
+    // Create TelemetryPointSheet
+    var TelemetryPointSheet = workbook.addWorksheet("TelemetryPoint");
+
+    // table header
+    TelemetryPointSheet.columns = [
+      { header: "ObservationName", key: "observationname", width: 30 },
+      { header: "Phenomenon", key: "phenomenon", width: 30 },
+      { header: "DeviceName", key: "devicename", width: 30 },
+      { header: "ObservedElement", key: "observedelement" },
+      { header: "IoTId", key: "iotid", width: 20 },
+    ];
+
+    // Add rows in the above header
+    TelemetryPointSheet.addRow({
+      observationname: "MS01",
+      phenomenon: "Motion-Detection",
+      devicename: "MS1",
+      observedelement: '{"ECClassId": "bis.spatialelement", "UserLabel": "Door"}',
+      iotid: "35770",
+    });
+
+    TelemetryPointSheet.addRow({
+      observationname: "AQ01",
+      phenomenon: "Air Quality",
+      devicename: "M2",
+      observedelement: '{"ECClassId": "bis.spatialelement", "ECInstanceId": "0xfa0"}',
+      iotid: "29898",
+    });
+
+    //background color for column header
+    TelemetryPointSheet.eachRow(function (row, rowNumber) {
+      row.eachCell((cell) => {
+        if (rowNumber == 1) {
+          cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "5E8CFB" },
+          };
+        }
+      });
+    });
+    console.log(TelemetryPointSheet);
+  }
+
   // Save Excel on Hard Disk
   workbook.xlsx.writeFile("Spreadsheet.xlsx").then(function () {
     // Success Message

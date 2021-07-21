@@ -25,9 +25,9 @@
       <option></option>
       <option value="DeviceType" >DeviceType</option>
       <option value="DeviceInterface">DeviceInterface</option>
+      <option value="DevicePhysical">DevicePhysical</option>
       <option value="TelemetryPoint">TelemetryPoint</option>
-      <option value="Locators">Locators</option>
-      <option value="DeviceCategory">DeviceCategory</option>
+      <option value="ActuationPoint">ActuationPoint</option>
     </select><br /><br />
     </div>
   </form>
@@ -51,10 +51,19 @@
     <input type="text" id="devicename" name="devicename" /><br /><br />
     <label for="devicetypename">DeviceTypeName:</label>
     <input type="text" id="devicetypename" name="devicetypename" /><br /><br />
-    <label for="locationpoint">LocationPoint:</label>
-    <input type="text" id="locationpoint" name="locationpoint" /><br /><br />
     <label for="iotid">IoTId:</label>
     <input type="text" id="iotid" name="iotid" /><br /><br />
+    <label for="physicalelement">PhysicalElement:</label>
+    <input type="text" id="physicalelement" name="physicalelement" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
+  </form>
+
+  <form id="devicephysicalfrm" style="display: none">
+    <h3>Form to enter DevicePhysical data</h3>
+    <label for="pdevicename">DeviceName:</label>
+    <input type="text" id="pdevicename" name="pdevicename" /><br /><br />
+    <label for="locationpoint">LocationPoint:</label>
+    <input type="text" id="locationpoint" name="locationpoint" /><br /><br />
     <label for="categoryname">CategoryName:</label>
     <input type="text" id="categoryname" name="categoryname" /><br /><br />
     <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
@@ -66,32 +75,23 @@
     <input type="text" id="observationname" name="observationname" /><br /><br />
     <label for="phenomenon">Phenomenon:</label>
     <input type="text" id="phenomenon" name="phenomenon" /><br /><br />
-    <label for="devicename">DeviceName:</label>
-    <input type="text" id="devicename" name="devicename" /><br /><br />
+    <label for="tdevicename">DeviceName:</label>
+    <input type="text" id="tdevicename" name="tdevicename" /><br /><br />
     <label for="observedelement">ObservedElement:</label>
     <input type="text" id="observedelement" name="observedelement" /><br /><br />
-    <label for="iotid">IoTId:</label>
-    <input type="text" id="iotid" name="iotid" /><br /><br />
+    <label for="tiotid">IoTId:</label>
+    <input type="text" id="tiotid" name="tiotid" /><br /><br />
     <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
-  <form id="locatorsfrm" style="display: none">
-    <h3>Form to enter Locators data</h3>
-    <label for="locatorname">LocatorName:</label>
-    <input type="text" id="locatorname" name="locatorname" /><br /><br />
-    <label for="classname">ClassName:</label>
-    <input type="text" id="classname" name="classname" /><br /><br />
-    <label for="propertyname">PropertyName:</label>
-    <input type="text" id="propertyname" name="propertyname" /><br /><br />
-    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
-  </form>
-
-  <form id="devicecategoryfrm" style="display: none">
-    <h3>Form to enter DeviceCategory data</h3>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" /><br /><br />
-    <label for="category">Category:</label>
-    <input type="text" id="category" name="category" /><br /><br />
+  <form id="actuationpointfrm" style="display: none">
+    <h3>Form to enter ActuationPoint data</h3>
+    <label for="actuationname">ActuationName:</label>
+    <input type="text" id="actuationname" name="actuationname" /><br /><br />
+    <label for="adevicename">DeviceName:</label>
+    <input type="text" id="adevicename" name="adevicename" /><br /><br />
+    <label for="aiotid">IoTId:</label>
+    <input type="text" id="aiotid" name="aiotid" /><br /><br />
     <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
@@ -103,8 +103,8 @@
           document.getElementById("devicetypefrm").style.display = "block";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
-          document.getElementById("locatorsfrm").style.display = "none";
-          document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("devicephysicalfrm").style.display = "none";
+          document.getElementById("actuationpointfrm").style.display = "none";
           document.getElementById("saveData").disabled = false;
           break;
 
@@ -113,8 +113,18 @@
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "block";
           document.getElementById("telemetrypointfrm").style.display = "none";
-          document.getElementById("locatorsfrm").style.display = "none";
-          document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("devicephysicalfrm").style.display = "none";
+          document.getElementById("actuationpointfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
+          break;
+
+        case "DevicePhysical":
+          document.getElementById("mainfrm").style.display = "block";
+          document.getElementById("devicetypefrm").style.display = "none";
+          document.getElementById("deviceinterfacefrm").style.display = "none";
+          document.getElementById("telemetrypointfrm").style.display = "none";
+          document.getElementById("devicephysicalfrm").style.display = "block";
+          document.getElementById("actuationpointfrm").style.display = "none";
           document.getElementById("saveData").disabled = false;
           break;
 
@@ -123,28 +133,18 @@
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "block";
-          document.getElementById("locatorsfrm").style.display = "none";
-          document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("devicephysicalfrm").style.display = "none";
+          document.getElementById("actuationpointfrm").style.display = "none";
           document.getElementById("saveData").disabled = false;
           break;
 
-        case "Locators":
+        case "ActuationPoint":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
-          document.getElementById("locatorsfrm").style.display = "block";
-          document.getElementById("devicecategoryfrm").style.display = "none";
-          document.getElementById("saveData").disabled = false;
-          break;
-
-        case "DeviceCategory":
-          document.getElementById("mainfrm").style.display = "block";
-          document.getElementById("devicetypefrm").style.display = "none";
-          document.getElementById("deviceinterfacefrm").style.display = "none";
-          document.getElementById("telemetrypointfrm").style.display = "none";
-          document.getElementById("locatorsfrm").style.display = "none";
-          document.getElementById("devicecategoryfrm").style.display = "block";
+          document.getElementById("devicephysicalfrm").style.display = "none";
+          document.getElementById("actuationpointfrm").style.display = "block";
           document.getElementById("saveData").disabled = false;
           break;
 
@@ -153,8 +153,9 @@
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
-          document.getElementById("locatorsfrm").style.display = "none";
-          document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("devicephysicalfrm").style.display = "none";
+          document.getElementById("actuationpointfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
       }
     }
   </script>

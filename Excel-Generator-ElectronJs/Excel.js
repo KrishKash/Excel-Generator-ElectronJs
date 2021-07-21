@@ -12,7 +12,7 @@ function createExcel() {
   }
   fileName += ".xlsx";
   if (fs.existsSync(fileName)) {
-    //disable createExcel button after spreadsheet get created
+    //disable createExcel button if spreadsheet already exists
     document.getElementById("createExcel").disabled = true;
     document.getElementById("createExcel").innerText = "Spreadsheet Created";
 
@@ -61,9 +61,18 @@ function createExcel() {
     DeviceInterfaceSheet.columns = [
       { header: "DeviceName", key: "devicename", width: 30 },
       { header: "DeviceTypeName", key: "devicetypename", width: 30 },
-      { header: "LocationPoint", key: "locationpoint", width: 30 },
       { header: "IoTId", key: "iotid", width: 20 },
-      { header: "CategoryName", key: "categoryname", width: 20 },
+      { header: "PhysicalElement", key: "physicalelement", width: 70 },
+    ];
+
+    // Create DeviceInterfaceSheet
+    var DevicePhysicalSheet = workbook.addWorksheet("DevicePhysical");
+
+    // table header
+    DevicePhysicalSheet.columns = [
+      { header: "DeviceName", key: "devicename", width: 30 },
+      { header: "LocationPoint", key: "locationpoint", width: 30 },
+      { header: "CategoryName", key: "categoryname", width: 30 },
     ];
 
     // Create TelemetryPointSheet
@@ -74,18 +83,18 @@ function createExcel() {
       { header: "ObservationName", key: "observationname", width: 30 },
       { header: "Phenomenon", key: "phenomenon", width: 30 },
       { header: "DeviceName", key: "devicename", width: 30 },
-      { header: "ObservedElement", key: "observedelement", width: 40 },
+      { header: "ObservedElement", key: "observedelement", width: 70 },
       { header: "IoTId", key: "iotid", width: 20 },
     ];
 
     // Create LocatorsSheet
-    var LocatorsSheet = workbook.addWorksheet("Locators");
+    var ActuationPointSheet = workbook.addWorksheet("ActuationPoint");
 
     // table header
-    LocatorsSheet.columns = [
-      { header: "LocatorName", key: "locatorname", width: 20 },
-      { header: "ClassName", key: "classname", width: 40 },
-      { header: "PropertyName", key: "propertyname", width: 20 },
+    ActuationPointSheet.columns = [
+      { header: "ActuationName", key: "actuationname", width: 30 },
+      { header: "DeviceName", key: "devicename", width: 20 },
+      { header: "IotId", key: "iotid", width: 20 },
     ];
 
     workbook.eachSheet(function (worksheet) {
@@ -96,7 +105,7 @@ function createExcel() {
             cell.fill = {
               type: "pattern",
               pattern: "solid",
-              fgColor: { argb: "f5b914" },
+              fgColor: { argb: "C5D9F1" },
             };
           }
         });
@@ -106,7 +115,7 @@ function createExcel() {
     // Save Excel on Hard Disk
     workbook.xlsx.writeFile(fileName).then(function () {
       // Success Message
-      alert("File Created");
+      alert(`File '${fileName}' Created`);
     });
   }
   //disable button after spreadsheet get created
@@ -133,12 +142,11 @@ function saveFormData() {
 
     switch (workSheet.name) {
       case "DeviceType":
-        // workSheet.addRow({
-        //   DeviceTypeName: "PIR-Motion-Sensor- Device",
+        //Sample Data
+        //   DeviceTypeName: "PIR-Motion-Sensor",
         //   Manufacturer: "Panasonic",
         //   ModelNumber: "Panasonic EKMC1603111",
         //   DeviceKind: "Infrared-Motion-Detector",
-        // });
         var DeviceTypeName = document.getElementById("devicetypename").value;
         var Manufacturer = document.getElementById("manufacturer").value;
         var ModelNumber = document.getElementById("modelnumber").value;
@@ -156,36 +164,52 @@ function saveFormData() {
         break;
 
       case "DeviceInterface":
+        //Sample Data
+        //   DeviceName: "MS1",
+        //   DeviceTypeName: "PIR-Motion-Sensor",
+        //   IoTId: "35670",
+        //   PhysicalElement: `{"ECClassId": "Generic.PhysicalObject", "UserLabel": "Window"}`,
         var DeviceName = document.getElementById("devicename").value;
         var DeviceTypeName = document.getElementById("devicetypename").value;
-        var LocationPoint = document.getElementById("locationpoint").value;
         var IoTId = document.getElementById("iotid").value;
-        var CategoryName = document.getElementById("categoryname").value;
+        var PhysicalElement = document.getElementById("physicalelement").value;
 
         workSheet.insertRow(++lastRow, [
           DeviceName,
           DeviceTypeName,
-          LocationPoint,
           IoTId,
+          PhysicalElement,
+        ]);
+        break;
+
+      case "DevicePhysical":
+        //Sample Data
+        //   DeviceName: "MS1",
+        //   LocationPoint: `{"x": 1.13, "y": 0.7, "z": 2.75}`,
+        //   CategoryName: "EnvironmentCategory",
+        var DeviceName = document.getElementById("pdevicename").value;
+        var LocationPoint = document.getElementById("locationpoint").value;
+        var CategoryName = document.getElementById("categoryname").value;
+
+        workSheet.insertRow(++lastRow, [
+          DeviceName,
+          LocationPoint,
           CategoryName,
         ]);
         break;
 
       case "TelemetryPoint":
-        // workSheet.addRow({
-        //   observationname: "MS01",
-        //   phenomenon: "Motion-Detection",
-        //   devicename: "MS1",
-        //   observedelement:
-        //     '{"ECClassId": "bis.spatialelement", "UserLabel": "Door"}',
-        //   iotid: "35770",
-        // });
-        // break;
+        //   Sample Data
+        //   ObservationName: "MS01",
+        //   Phenomenon: "Motion-Detection",
+        //   DeviceName: "MS1",
+        //   ObservedElement:'{"ECClassId": "bis.spatialelement", "UserLabel": "Door"}',
+        //   IoTId: "35770",
         var ObservationName = document.getElementById("observationname").value;
         var Phenomenon = document.getElementById("phenomenon").value;
-        var DeviceName = document.getElementById("devicename").value;
+        var DeviceName = document.getElementById("tdevicename").value;
         var ObservedElement = document.getElementById("observedelement").value;
-        var IoTId = document.getElementById("iotid").value;
+        var IoTId = document.getElementById("tiotid").value;
 
         workSheet.insertRow(++lastRow, [
           ObservationName,
@@ -196,28 +220,26 @@ function saveFormData() {
         ]);
         break;
 
-      case "Locators":
-        // workSheet.addRow({
-        //   locatorname: "ById",
-        //   classname: "bis.spatialelement",
-        //   propertyname: "ECInstanceId",
-        // });
-        // break;
-        var LocatorName = document.getElementById("locatorname").value;
-        var ClassName = document.getElementById("classname").value;
-        var PropertyName = document.getElementById("propertyname").value;
+      case "ActuationPoint":
+        //   Sample Data
+        //   ActuationName: "Actuator-ENV11",
+        //   DeviceName: "MS1",
+        //   IoTId: "25791",
+        var ActuationName = document.getElementById("actuationname").value;
+        var DeviceName = document.getElementById("adevicename").value;
+        var IoTId = document.getElementById("aiotid").value;
 
         workSheet.insertRow(++lastRow, [
-          LocatorName,
-          ClassName,
-          PropertyName,
+          ActuationName,
+          DeviceName,
+          IoTId,
         ]);
         break;
-        
+
       default:
-        alert(workSheet + "doesn't exist in " + fileName);
+        alert(`'${workSheet}' doesn't exist in '${fileName}'`);
     }
-    //workbook.commit();
+
     alert("Data Saved!");
     document.getElementById("saveData").disabled = true;
     workbook.xlsx.writeFile(fileName);

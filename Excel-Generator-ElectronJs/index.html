@@ -7,6 +7,12 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
   <script src="./Excel.js"></script>
   <title>Iot-Device-Connector!</title>
+  <style>
+    label{
+      width: 140px;
+      display: inline-block;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,7 +26,7 @@
     <!-- Available Sheets -->
     <div id="sheetnames" style="display: none">
     <label for="sname">Sheet Names:</label>
-    <select id="sname" name="sname" onChange="generateSheetForm(this.value);">
+    <select id="sname" name="sname" style="width: 165px" onChange="generateSheetForm(this.value);">
       <!-- <option value="DeviceType" selected>DeviceType</option> -->
       <option></option>
       <option value="DeviceType" >DeviceType</option>

@@ -18,15 +18,18 @@
     <input type="text" id="ssname" name="ssname" /><br /><br />
 
     <!-- Available Sheets -->
+    <div id="sheetnames" style="display: none">
     <label for="sname">Sheet Names:</label>
     <select id="sname" name="sname" onChange="generateSheetForm(this.value);">
-      <option value="devicetype" selected>DeviceType</option>
-      <!-- <option value="devicetype" >DeviceType</option> -->
-      <option value="deviceinterface">DeviceInterface</option>
-      <option value="telemetrypoint">TelemetryPoint</option>
-      <option value="locators">Locators</option>
-      <option value="deviceCategory">DeviceCategory</option>
+      <!-- <option value="DeviceType" selected>DeviceType</option> -->
+      <option></option>
+      <option value="DeviceType" >DeviceType</option>
+      <option value="DeviceInterface">DeviceInterface</option>
+      <option value="TelemetryPoint">TelemetryPoint</option>
+      <option value="Locators">Locators</option>
+      <option value="DeviceCategory">DeviceCategory</option>
     </select><br /><br />
+    </div>
   </form>
 
   <form id="devicetypefrm" style="display: none">
@@ -39,6 +42,7 @@
     <input type="text" id="modelnumber" name="modelnumber" /><br /><br />
     <label for="devicekind">DeviceKind:</label>
     <input type="text" id="devicekind" name="devicekind" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
   <form id="deviceinterfacefrm" style="display: none">
@@ -53,6 +57,7 @@
     <input type="text" id="iotid" name="iotid" /><br /><br />
     <label for="categoryname">CategoryName:</label>
     <input type="text" id="categoryname" name="categoryname" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
   <form id="telemetrypointfrm" style="display: none">
@@ -67,6 +72,7 @@
     <input type="text" id="observedelement" name="observedelement" /><br /><br />
     <label for="iotid">IoTId:</label>
     <input type="text" id="iotid" name="iotid" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
   <form id="locatorsfrm" style="display: none">
@@ -77,6 +83,7 @@
     <input type="text" id="classname" name="classname" /><br /><br />
     <label for="propertyname">PropertyName:</label>
     <input type="text" id="propertyname" name="propertyname" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
   <form id="devicecategoryfrm" style="display: none">
@@ -85,54 +92,60 @@
     <input type="text" id="name" name="name" /><br /><br />
     <label for="category">Category:</label>
     <input type="text" id="category" name="category" /><br /><br />
+    <!-- <button onclick="saveFormData()">Save Data</button><br /><br /> -->
   </form>
 
   <script>
     function generateSheetForm(value) {
       switch (value) {
-        case "devicetype":
+        case "DeviceType":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "block";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
           document.getElementById("locatorsfrm").style.display = "none";
           document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
           break;
 
-        case "deviceinterface":
+        case "DeviceInterface":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "block";
           document.getElementById("telemetrypointfrm").style.display = "none";
           document.getElementById("locatorsfrm").style.display = "none";
           document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
           break;
 
-        case "telemetrypoint":
+        case "TelemetryPoint":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "block";
           document.getElementById("locatorsfrm").style.display = "none";
           document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
           break;
 
-        case "locators":
+        case "Locators":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
           document.getElementById("locatorsfrm").style.display = "block";
           document.getElementById("devicecategoryfrm").style.display = "none";
+          document.getElementById("saveData").disabled = false;
           break;
 
-        case "devicecategory":
+        case "DeviceCategory":
           document.getElementById("mainfrm").style.display = "block";
           document.getElementById("devicetypefrm").style.display = "none";
           document.getElementById("deviceinterfacefrm").style.display = "none";
           document.getElementById("telemetrypointfrm").style.display = "none";
           document.getElementById("locatorsfrm").style.display = "none";
           document.getElementById("devicecategoryfrm").style.display = "block";
+          document.getElementById("saveData").disabled = false;
           break;
 
         default:
@@ -146,7 +159,8 @@
     }
   </script>
 
-  <button onclick="createExcel()">Create Spreadsheet</button>
+  <button id= "createExcel" onclick="createExcel()" >Create Spreadsheet</button><nbsp /><nbsp />
+  <button id= "saveData" onclick="saveFormData()" disabled>Save Data</button><br /><br />
 </body>
 
 </html>

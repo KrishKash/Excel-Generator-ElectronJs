@@ -137,6 +137,10 @@ function saveFormData() {
 
   workbook.xlsx.readFile(fileName).then(function () {
     var sheetName = document.getElementById("sname").value;
+    if (!sheetName) {
+      alert("Please select a sheet from dropdown first!");
+      return;
+    }
     var workSheet = workbook.getWorksheet(sheetName);
     var lastRow = workSheet.lastRow.number;
 
@@ -152,6 +156,10 @@ function saveFormData() {
         var ModelNumber = document.getElementById("modelnumber").value;
         var DeviceKind = document.getElementById("devicekind").value;
 
+        if (!validateFormData()) {
+          alert("One or more fields cannot be left blank");
+          return;
+        }
         workSheet.insertRow(++lastRow, [
           DeviceTypeName,
           Manufacturer,
@@ -174,6 +182,10 @@ function saveFormData() {
         var IoTId = document.getElementById("iotid").value;
         var PhysicalElement = document.getElementById("physicalelement").value;
 
+        if (!validateFormData()) {
+          alert("One or more fields cannot be left blank");
+          return;
+        }
         workSheet.insertRow(++lastRow, [
           DeviceName,
           DeviceTypeName,
@@ -191,6 +203,10 @@ function saveFormData() {
         var LocationPoint = document.getElementById("locationpoint").value;
         var CategoryName = document.getElementById("categoryname").value;
 
+        if (!validateFormData()) {
+          alert("One or more fields cannot be left blank");
+          return;
+        }
         workSheet.insertRow(++lastRow, [
           DeviceName,
           LocationPoint,
@@ -211,6 +227,10 @@ function saveFormData() {
         var ObservedElement = document.getElementById("observedelement").value;
         var IoTId = document.getElementById("tiotid").value;
 
+        if (!validateFormData()) {
+          alert("One or more fields cannot be left blank");
+          return;
+        }
         workSheet.insertRow(++lastRow, [
           ObservationName,
           Phenomenon,
@@ -229,6 +249,10 @@ function saveFormData() {
         var DeviceName = document.getElementById("adevicename").value;
         var IoTId = document.getElementById("aiotid").value;
 
+        if (!validateFormData()) {
+          alert("One or more fields cannot be left blank");
+          return;
+        }
         workSheet.insertRow(++lastRow, [
           ActuationName,
           DeviceName,
@@ -244,4 +268,14 @@ function saveFormData() {
     document.getElementById("saveData").disabled = true;
     workbook.xlsx.writeFile(fileName);
   });
+}
+
+function validateFormData() {
+  var elements = document.getElementsByTagName("input");
+  isValid = true;
+  for (var i = 0; i < elements.length; i++) {
+    // console.log(elements[i].value);
+    if (elements[i].value == "") isValid = false;
+  }
+  return isValid;
 }

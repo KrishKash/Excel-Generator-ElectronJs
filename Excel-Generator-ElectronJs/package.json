@@ -1,13 +1,21 @@
 {
   "name": "Excel-Generator-App",
   "version": "1.0.0",
-  "description": "Hello World",
+  "description": "An Electron (JS) app for Excel Generation.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder"
   },
-  "author": "krishna",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krishna-kashyap-dev/Excel-Generator-ElectronJs"
+  },
+  "bugs": {
+    "url": "https://github.com/krishna-kashyap-dev/Excel-Generator-ElectronJs/issues"
+  },
+  "homepage": "https://github.com/krishna-kashyap-dev/Excel-Generator-ElectronJs#readme",
+  "author": "Krishna Kashyap",
   "license": "ISC",
   "devDependencies": {
     "electron": "^7.1.2",
@@ -17,17 +25,15 @@
     "exceljs": "^4.2.1"
   },
   "build": {
-    "appId": "EGEJS",
-    "productName": "Excel Generator ElectronJs App",
+    "appId": "excel.generator.electron",
+    "productName": "Excel Generator Electron (Js)",
     "win": {
-      "target": [
-        "nsis"
-      ],
+      "target": "nsis",
       "icon": "Icon.ico"
     },
     "nsis": {
       "oneClick": false,
-      "artifactName": "Ex-Gen.exe"
+      "artifactName": "Excel-Generator.exe"
     }
   }
 }

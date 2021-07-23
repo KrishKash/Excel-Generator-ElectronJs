@@ -55,8 +55,8 @@
     <h3>Form to enter DeviceInterface data</h3>
     <label for="devicename">DeviceName:</label>
     <input type="text" id="devicename" name="devicename" /><br /><br />
-    <label for="devicetypename">DeviceTypeName:</label>
-    <input type="text" id="devicetypename" name="devicetypename" /><br /><br />
+    <label for="idevicetypename">DeviceTypeName:</label>
+    <input type="text" id="idevicetypename" name="idevicetypename" /><br /><br />
     <label for="iotid">IoTId:</label>
     <input type="text" id="iotid" name="iotid" /><br /><br />
     <label for="physicalelement">PhysicalElement:</label>
@@ -167,7 +167,7 @@
   </script>
 
   <button id= "createExcel" onclick="createExcel()" >Create Spreadsheet</button><nbsp /><nbsp />
-  <button id= "saveData" onclick="saveFormData()" disabled>Save Data</button><br /><br />
+  <button id= "saveData" onclick="saveFormData(document.getElementById('ssname').value)" disabled>Save Data</button><br /><br />
 </body>
 
 </html>

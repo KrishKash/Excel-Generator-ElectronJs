@@ -1,7 +1,6 @@
+const ExcelJS = require("exceljs");
+const fs = require("fs");
 function createExcel() {
-  var ExcelJS = require("exceljs");
-  const fs = require("fs");
-
   //A new Excel Work Book
   var workbook = new ExcelJS.Workbook();
 
@@ -11,7 +10,10 @@ function createExcel() {
     return;
   }
   fileName += ".xlsx";
-  if (fs.existsSync(fileName)) {
+  var downloadFolder = process.env.USERPROFILE + "/Downloads";
+  console.log(`${downloadFolder}`);
+
+  if (fs.existsSync(`${downloadFolder}/${fileName}`)) {
     //disable createExcel button if spreadsheet already exists
     document.getElementById("createExcel").disabled = true;
     document.getElementById("createExcel").innerText = "Spreadsheet Created";
@@ -30,18 +32,6 @@ function createExcel() {
     workbook.modified = new Date();
     workbook.lastPrinted = new Date(2021, 7, 9);
 
-    // var Sheets= ["DeviceType", "DeviceInterface", "TelemetryPoint", "Locators"];
-
-    // var ColumnHeader = {
-    //   DeviceType: ["DeviceTypeName", "Manufacturer", "ModelNumber", "DeviceKind"],
-    //   DeviceInterface: ["DeviceName", "DeviceTypeName", "LocationPoint", "IoTId", "CategoryName"],
-    //   TelemetryPoint: ["A", "Aa", "Aaa", "Aaaa", "Aaaa"],
-    //   Locators: ["B", "Bb", "Bbb", "Bbbb", "Bbbb"]
-    // }
-
-    // Sheets.forEach(sheet=>{
-    //   var workSheet= workbook.addWorksheet(sheet);
-    // });
 
     // Create DeviceTypeSheet
     var DeviceTypeSheet = workbook.addWorksheet("DeviceType");
@@ -107,13 +97,19 @@ function createExcel() {
               pattern: "solid",
               fgColor: { argb: "C5D9F1" },
             };
+            cell.border = {
+              top: { style: "thin" },
+              left: { style: "thin"},
+              bottom: { style: "thin" },
+              right: { style: "thin" }
+            };
           }
         });
       });
     });
 
     // Save Excel on Hard Disk
-    workbook.xlsx.writeFile(`./${fileName}`).then(function () {
+    workbook.xlsx.writeFile(`${downloadFolder}/${fileName}`).then(function () {
       // Success Message
       alert(`File '${fileName}' Created`);
     });
@@ -127,15 +123,24 @@ function createExcel() {
   document.getElementById("saveData").disabled = false;
 }
 
-function saveFormData() {
-  var ExcelJS = require("exceljs");
-
+function saveFormData(filename) {
   // Excel Work Book
   var workbook = new ExcelJS.Workbook();
-  var fileName = document.getElementById("ssname").value;
-  fileName += ".xlsx";
+  var curfile = document.getElementById("ssname").value;
+  if (!curfile) {
+    alert("Please enter the file name first!");
+    return;
+  }
+  curfile += ".xlsx";
+  fileName = filename + ".xlsx";
+  var downloadFolder = process.env.USERPROFILE + "/Downloads";
 
-  workbook.xlsx.readFile(`./${fileName}`).then(function () {
+  if (!fs.existsSync(`${downloadFolder}/${fileName}`)) {
+    alert(`File mismatched, you are writing in '${curfile}' which does not exist in '${downloadFolder}'`);
+    return;
+  }
+
+  workbook.xlsx.readFile(`${downloadFolder}/${fileName}`).then(function () {
     var sheetName = document.getElementById("sname").value;
     if (!sheetName) {
       alert("Please select a sheet from dropdown first!");
@@ -167,8 +172,9 @@ function saveFormData() {
           DeviceKind,
         ]);
 
-        // workSheet.insertRow(lastRow, ["PIR-Motion-Sensor- Device3", "Panasonic", "Panasonic EKMC1603111", "Infrared-Motion-Detector"]);
-        // console.log(JSON.stringify(workSheet.getSheetValues()));
+        //reset the form once data is written in the sheet
+        document.getElementById("devicetypefrm").reset();
+        document.getElementById("saveData").disabled = false;
         break;
 
       case "DeviceInterface":
@@ -178,7 +184,7 @@ function saveFormData() {
         //   IoTId: "35670",
         //   PhysicalElement: `{"ECClassId": "Generic.PhysicalObject", "UserLabel": "Window"}`,
         var DeviceName = document.getElementById("devicename").value;
-        var DeviceTypeName = document.getElementById("devicetypename").value;
+        var DeviceTypeName = document.getElementById("idevicetypename").value;
         var IoTId = document.getElementById("iotid").value;
         var PhysicalElement = document.getElementById("physicalelement").value;
 
@@ -192,6 +198,10 @@ function saveFormData() {
           IoTId,
           PhysicalElement,
         ]);
+
+        //reset the form once data is written in the sheet
+        document.getElementById("deviceinterfacefrm").reset();
+        document.getElementById("saveData").disabled = false;
         break;
 
       case "DevicePhysical":
@@ -212,6 +222,10 @@ function saveFormData() {
           LocationPoint,
           CategoryName,
         ]);
+
+        //reset the form once data is written in the sheet
+        document.getElementById("devicephysicalfrm").reset();
+        document.getElementById("saveData").disabled = false;
         break;
 
       case "TelemetryPoint":
@@ -238,6 +252,10 @@ function saveFormData() {
           ObservedElement,
           IoTId,
         ]);
+
+        //reset the form once data is written in the sheet
+        document.getElementById("telemetrypointfrm").reset();
+        document.getElementById("saveData").disabled = false;
         break;
 
       case "ActuationPoint":
@@ -258,6 +276,10 @@ function saveFormData() {
           DeviceName,
           IoTId,
         ]);
+
+        //reset the form once data is written in the sheet
+        document.getElementById("actuationpointfrm").reset();
+        document.getElementById("saveData").disabled = false;
         break;
 
       default:
@@ -265,8 +287,8 @@ function saveFormData() {
     }
 
     alert("Data Saved!");
-    document.getElementById("saveData").disabled = true;
-    workbook.xlsx.writeFile(`./${fileName}`);
+    //document.getElementById("saveData").disabled = true;
+    workbook.xlsx.writeFile(`${downloadFolder}/${fileName}`);
   });
 }
 

@@ -1,18 +1,33 @@
 {
-  "name": "hello-world",
+  "name": "Excel-Generator-App",
   "version": "1.0.0",
   "description": "Hello World",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dist": "electron-builder"
   },
   "author": "krishna",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^7.1.2"
+    "electron": "^7.1.2",
+    "electron-builder": "^22.11.7"
   },
   "dependencies": {
     "exceljs": "^4.2.1"
+  },
+  "build": {
+    "appId": "EGEJS",
+    "productName": "Excel Generator ElectronJs App",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "Icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "artifactName": "Ex-Gen.exe"
+    }
   }
 }

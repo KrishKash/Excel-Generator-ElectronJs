@@ -1,6 +1,12 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 
+try {
+  require("electron-reloader")(module);
+} catch (_) {
+  console.log("Error");
+}
+
 let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
